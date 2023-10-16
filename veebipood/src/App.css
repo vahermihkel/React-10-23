@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+  background-color: rgb(244, 239, 232);
+  min-height: 100vh;
+}
+
+/* originaalne kujundus (lehele tulles) */
+.nupu-stiil {
+  color: rgb(137, 136, 136);
+  border: 2px double gray;
+}
+
+/* sündmusega kujundus (hiirega üle minnes) */
+.nupu-stiil:hover {
+  color: rgb(79, 65, 65);
+  border: 3px dotted green;
+  cursor: pointer;
+}
+
+.nupu-stiil:active {
+  text-decoration: underline;
+}
+
+.pilt {
+  /* height: 100px; */
+  width: 150px;
+}
+
+.pilt:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.pilt:active {
+  border-radius: 10px;
+}
