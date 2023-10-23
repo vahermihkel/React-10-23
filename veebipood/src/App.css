@@ -1,8 +1,8 @@
-.App {
+/* .App {
   text-align: center;
   background-color: rgb(244, 239, 232);
   min-height: 100vh;
-}
+} */
 
 /* originaalne kujundus (lehele tulles) */
 .nupu-stiil {
@@ -33,4 +33,21 @@
 
 .pilt:active {
   border-radius: 10px;
+}
+
+.kuldne {
+  color: goldenrod;
+}
+
+.tume {
+  background-color: black;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.hele {
+  background-color: rgb(241, 222, 222);
+  text-align: center;
+  min-height: 100vh;
 }

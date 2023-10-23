@@ -6,7 +6,7 @@ function MitteLeitud() {
     <div>
       <h2>404 Not Found</h2>
 
-      <Link to="/avaleht">
+      <Link to="/">
         <button>Tagasi avalehele</button>
       </Link>
 
