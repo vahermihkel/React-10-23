@@ -30,7 +30,7 @@ import React, { useState } from 'react'
 function Avaleht() {
   // vasakpoolne sõna (muutuja) läheb HTMLi loogeliste sulgude sisse
   // parempoolse sõna (funktsiooni) abil uuendatakse vasakpoolset ja HTMLi korraga
-  const [kogus, muudaKogus] = useState(8);
+  const [kogus, muudaKogus] = useState(localStorage.getItem("kogus") || 0);
   const [laigitud, uuendaLaigitud] = useState(false); // true/false, täisealine, makstud, aktiivne
   const [sonum, m22raSonum] = useState("Muuda kogust!");
 
@@ -39,16 +39,19 @@ function Avaleht() {
     muudaKogus(0);
     // console.log()
     // localStorage.getItem("")
+    localStorage.setItem("kogus", 0);
   } // <------------
 
   function vahenda() {
     m22raSonum("Vähendatud!");
     muudaKogus(kogus - 1);
+    localStorage.setItem("kogus", kogus - 1);
   } // <------------
 
   function suurenda() {
     m22raSonum("Suurendatud!");
     muudaKogus(kogus + 1);
+    localStorage.setItem("kogus", kogus + 1);
     // () => ei panema. () => on onClick sees
   }
 

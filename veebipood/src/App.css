@@ -51,3 +51,7 @@
   text-align: center;
   min-height: 100vh;
 }
+
+.aktiivne {
+  color: lightblue;
+}
