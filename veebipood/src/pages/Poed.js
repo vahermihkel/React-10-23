@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
+import poedFailist from "../data/poed.json" 
 
 function Poed() {
-  const [poed, muudaPoed] = useState(["Ülemiste", "Viimsi", "Rocca al Mare",  "Magistrali", "Vesse", "Kristiine", "Järveotsa"]);
+  const [poed, muudaPoed] = useState(poedFailist);
+
+  const originaali = () => {
+    muudaPoed(poedFailist);
+  }
 
   const sorteeriAZ = () => {
     //poed.sort();
@@ -14,37 +19,94 @@ function Poed() {
     muudaPoed(poed.slice()); // slice kustutab ära mälukoha
   }
 
+  const sorteeriTahedKasvavalt = () => {
+    poed.sort((a,b) => a.length - b.length); // sorteerimiseks
+    muudaPoed(poed.slice()); // HTMLi muutmiseks
+  }
+
+  const sorteeriTahedKahanevalt = () => {
+    poed.sort((a,b) => b.length - a.length); // sorteerimiseks
+    muudaPoed(poed.slice()); // HTMLi muutmiseks
+  }
+
+  const sorteeriKolmandaTaheJargi = () => {                       //  012345678
+    poed.sort((a,b) => a[2].localeCompare(b[2])); // sorteerimiseks   Kristiine
+    muudaPoed(poed.slice()); // HTMLi muutmiseks
+  }
+
+  const sorteeriSonadeArvuJargi = () => {                       //  012345678
+    poed.sort((a,b) => a.split(" ").length - b.split(" ").length); // sorteerimiseks   Kristiine
+    muudaPoed(poed.slice()); // HTMLi muutmiseks
+  }
+
   const filtreeriEgaLoppevad = () => {
-    const vastus = poed.filter(yksPood => yksPood.endsWith("e"));
+    const vastus = poedFailist.filter(yksPood => yksPood.endsWith("e"));
     muudaPoed(vastus);
   }
 
   const filtreeriKesSisaldabIsLyhendit = () => {
-    const vastus = poed.filter(yksPood => yksPood.includes("is"));
+    const vastus = poedFailist.filter(yksPood => yksPood.includes("is"));
     muudaPoed(vastus);
   }
 
-  const originaali = () => {
-    muudaPoed(["Ülemiste", "Viimsi", "Rocca al Mare",  "Magistrali", "Vesse", "Kristiine", "Järveotsa"]);
+  const filtreeriKellelOn9Tahte = () => {
+    const vastus = poedFailist.filter(yksPood => yksPood.length === 9);
+    muudaPoed(vastus);
   }
+
+  const filtreeriKellelOnVahemalt7Tahte = () => {
+    const vastus = poedFailist.filter(yksPood => yksPood.length >= 7);
+    muudaPoed(vastus);
+  }
+
+  const filtreeriKellelOnKolmasTahtI = () => {
+    const vastus = poedFailist.filter(yksPood => yksPood[2] === 'i');
+    muudaPoed(vastus);
+  }
+
+  const filtreeriKellelOnRohkemKui1Sona = () => {
+    const vastus = poedFailist.filter(yksPood => yksPood.split(" ").length > 1);
+    muudaPoed(vastus);
+  }
+
+  // antakse tööülesanne
+  // 1. vaatate sellest samast projektist kus arendust tegema peab, kas on sarnast asja tehtud
+  // 2. otsite enda olemasolevatest projektidest näidet, kas olete sama asja teinud
+  // 3. googeldate, küsite chatGPT (2h-3h, 2 päeva)
+  // 4. töökaaslane
 
   return (
     <div>
       <button onClick={originaali}>Tagasi originaali</button>
+      <br /><br />
+
       <button onClick={sorteeriAZ}>Sorteeri A-Z</button>
       <button onClick={sorteeriZA}>Sorteeri Z-A</button>
-      <button onClick={filtreeriEgaLoppevad}>Filtreeri e-ga lõppevad</button>
-      <button onClick={filtreeriKesSisaldabIsLyhendit}>Jäta alles kellel on 'is' lühend</button>
-      {poed.map(yksPood => <div className="pood">{yksPood}</div> )}
-      {/* <div className="pood">Ülemiste</div>
-      <div className="pood">Viimsi</div>
-      <div className="pood">Rocca al Mare</div>
-      <div className="pood">Magistrali</div>
-      <div className="pood">Vesse</div>
-      <div className="pood">Kristiine</div>
-      <div className="pood">Järveotsa</div> */}
+      <button onClick={sorteeriTahedKasvavalt}>Sorteeri tähtede arv kasvavalt</button>
+      <button onClick={sorteeriTahedKahanevalt}>Sorteeri tähtede arv kahanevalt</button>
+      <button onClick={sorteeriKolmandaTaheJargi}>Sorteeri kolmanda tähe järgi</button>
+      <button onClick={sorteeriSonadeArvuJargi}>Sorteeri sõnade arvu järgi</button>
+      <br /><br />
+
+      <button onClick={filtreeriEgaLoppevad}>Jäta alles 'e'ga lõppevad</button>
+      <button onClick={filtreeriKesSisaldabIsLyhendit}>Jäta alles 'is' lühendiga</button>
+      <button onClick={filtreeriKellelOn9Tahte}>Jäta alles kellel on 9 tähte</button>
+      <button onClick={filtreeriKellelOnVahemalt7Tahte}>Jäta alles kellel on vähemalt 7 tähte</button>
+      <button onClick={filtreeriKellelOnKolmasTahtI}>Jäta alles kellel on 3-s täht 'i'</button>
+      <button onClick={filtreeriKellelOnRohkemKui1Sona}>Jäta alles kellel on rohkem kui 1 sõna</button>
+      { poed.map(yksPood => <div className="pood">{yksPood}</div> )}
     </div>
   )
 }
 
 export default Poed
+
+
+  //const telefonid = ["iPhone", "Samsung", "Huawei"];
+  // const [telefonid, uuendaTelefonid] = useState(["iPhone", "Samsung", "Huawei"]);
+
+  // const uuenda = () => {
+  //   telefonid.sort(); // siia tuleb tagataustal ["Huawei", "iPhone", "Samsung"]
+  //   uuendaTelefonid(telefonid.slice()); // sulgude sisse tuleb tagataustal ["Huawei", "iPhone", "Samsung"]
+  // }                                     // aga ilma pärinemisjäljeta (mälukohata)
+
