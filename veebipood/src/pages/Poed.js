@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import poedFailist from "../data/poed.json" 
 
 function Poed() {
-  const [poed, muudaPoed] = useState(poedFailist);
+  const [poed, muudaPoed] = useState(poedFailist.slice());
+  const poodViide = useRef(); // viide <- tõlge referencest, mis on ref lühidalt
 
   const originaali = () => {
-    muudaPoed(poedFailist);
+    muudaPoed(poedFailist.slice());
   }
 
   const sorteeriAZ = () => {
@@ -75,8 +76,27 @@ function Poed() {
   // 3. googeldate, küsite chatGPT (2h-3h, 2 päeva)
   // 4. töökaaslane
 
+  const lisa = () => {
+    poed.push(poodViide.current.value);
+    muudaPoed(poed.slice());
+    // console.log("KÄIVITUS");
+  }
+
+  // render <-- HTMLi väljakuvamine
+  // re-render <-- HTMLi uuendamine (useState funktsiooni abil)
+
+  const kustuta = (jrknr) => {
+    poed.splice(jrknr, 1);
+    muudaPoed(poed.slice());
+  }
+
   return (
     <div>
+
+      <label>Pood</label> <br />
+      <input ref={poodViide} type="text" /> <br />
+      <button onClick={lisa}>Lisa</button>
+
       <button onClick={originaali}>Tagasi originaali</button>
       <br /><br />
 
@@ -94,7 +114,11 @@ function Poed() {
       <button onClick={filtreeriKellelOnVahemalt7Tahte}>Jäta alles kellel on vähemalt 7 tähte</button>
       <button onClick={filtreeriKellelOnKolmasTahtI}>Jäta alles kellel on 3-s täht 'i'</button>
       <button onClick={filtreeriKellelOnRohkemKui1Sona}>Jäta alles kellel on rohkem kui 1 sõna</button>
-      { poed.map(yksPood => <div className="pood">{yksPood}</div> )}
+      { poed.map((yksPood, index) => 
+        <div key={yksPood} className="pood">
+          {yksPood}
+          <button onClick={() => kustuta(index)}>x</button>
+        </div> )}
     </div>
   )
 }

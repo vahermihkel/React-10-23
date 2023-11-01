@@ -11,6 +11,8 @@ kogus = kogus + 1;
 kogus = kogus + 1;
 console.log(kogus);
 
+document.getElementById("kogus").innerText = kogus;
+
 let nimi = "Anne";
 nimi = nimi + 1;
 console.log(nimi);

@@ -50,7 +50,19 @@ function Avaleht() {
 
   function suurenda() {
     m22raSonum("Suurendatud!");
-    muudaKogus(kogus + 1);
+    muudaKogus(kogus + 1); 
+    // sonum = "Suurendatud";
+    // document.getElementById("sonum").innerText = "Suurendatud";
+    // kogus = kogus + 1;
+    // console.log(kogus);
+    // HTMLi muutmiseks:
+    // a) muudaKogus(kogus + 1); 
+    // b) document.getElementById("kogus").innerText = kogus;
+    // miks kasutada useState funktsionaalsust document.getElementById asemel:
+    // 1. muutuja muutub igal pool HTMLs, aga kui document.getElementById siis ainult seal kus ise ütlen
+    // 2. efektiivsem, käib ainult selle faili HTMLi läbi, muidu käbi kogu HTMLi läbi
+    // 3. võib kogemata olla kaks sama ID-ga elementi
+
     localStorage.setItem("kogus", kogus + 1);
     // () => ei panema. () => on onClick sees
   }
@@ -58,7 +70,7 @@ function Avaleht() {
   return (
     <div>
       {/*  */}
-      <div>{sonum}</div>
+      <div id="sonum">{sonum}</div>
       {laigitud === true && kogus < 10 && <img src="/laigitud.svg" alt="" onClick={() => m22raSonum("Punane süda - sul on laigitud, aga kogus on vähem kui 10")} />}
       {laigitud === false && <img src="/mittelaigitud.svg" alt="" onClick={() => m22raSonum("Läbipaistev süda - laikimata")}  />}
       {laigitud === true && kogus >= 10 && <img src="/legendaarne.svg" alt="" onClick={() => m22raSonum("Kuldne süda - laigitud ja kogus 10 või rohkem")} />}
@@ -70,7 +82,7 @@ function Avaleht() {
       <br />
       {/* {kogus > 0 && <button onClick={() => muudaKogus(kogus - 1)}>-</button>} */}
       <button disabled={kogus === 0} onClick={() => vahenda()}>-</button>
-      <span className={kogus >= 10 ? "kuldne" : undefined}>Kokku: {kogus} tk</span>
+      <span id="kogus" className={kogus >= 10 ? "kuldne" : undefined}>Kokku: {kogus} tk</span>
       <button onClick={() => suurenda()}>+</button>
     </div>
   )
