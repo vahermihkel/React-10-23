@@ -10,6 +10,10 @@ import Seaded from './pages/Seaded';
 import Hinnad from './pages/Hinnad';
 import Tooted from './pages/Tooted';
 import Poed from './pages/Poed';
+import YksikToode from './pages/YksikToode';
+import YksikPood from './pages/YksikPood';
+import MuudaToode from './pages/MuudaToode';
+import HaldaTooteid from './pages/HaldaTooteid';
 
 
 function App() {
@@ -58,15 +62,23 @@ function App() {
         <button className="nupu-stiil">Poed</button>
       </Link>
 
+      <Link to="/halda">
+        <button className="nupu-stiil">Muuda/kustuta tooteid</button>
+      </Link>
+
       <Routes>
-        <Route path="" element={ <Avaleht /> } />
-        <Route path="ostukorv" element={ <Ostukorv /> } />
-        <Route path="lisa" element={ <LisaToode /> } />
-        <Route path="seaded" element={ <Seaded /> } />
-        <Route path="hinnad" element={ <Hinnad /> } />
-        <Route path="tooted" element={ <Tooted /> } />
-        <Route path="poed" element={ <Poed /> } />
-        <Route path="*" element={ <MitteLeitud /> } />
+        <Route path="" element={<Avaleht />} />
+        <Route path="ostukorv" element={<Ostukorv />} />
+        <Route path="lisa" element={<LisaToode />} />
+        <Route path="seaded" element={<Seaded />} />
+        <Route path="hinnad" element={<Hinnad />} />
+        <Route path="tooted" element={<Tooted />} />
+        <Route path="halda" element={<HaldaTooteid />} />
+        <Route path="poed" element={<Poed />} />
+        <Route path="yksik-toode/:toote_indeks" element={<YksikToode />} />
+        <Route path="yksik-pood/:poe_indeks" element={<YksikPood />} />
+        <Route path="muuda-toode/:toote_jrknr" element={<MuudaToode />} />
+        <Route path="*" element={<MitteLeitud />} />
       </Routes>
 
       {/* SIIN ON FOOTER

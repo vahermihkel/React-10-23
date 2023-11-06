@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import poedFailist from "../data/poed.json" 
+import { Link } from 'react-router-dom';
 
 function Poed() {
   const [poed, muudaPoed] = useState(poedFailist.slice());
@@ -118,6 +119,9 @@ function Poed() {
         <div key={yksPood} className="pood">
           {yksPood}
           <button onClick={() => kustuta(index)}>x</button>
+          <Link to={"/yksik-pood/" + index}>
+            <button>Vaata detailsemalt</button>
+          </Link>
         </div> )}
     </div>
   )
