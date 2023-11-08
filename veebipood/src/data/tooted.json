@@ -1,1 +1,5 @@
-["BMW", "Tesla", "Nobe"]
+[
+  {"nimi": "BMW", "hind": 35000, "aktiivne": true, "pilt": "https://imgd.aeplcdn.com/642x336/n/cw/ec/132513/7-series-exterior-right-front-three-quarter-3.jpeg"}, 
+  {"nimi": "Tesla", "hind": 85000, "aktiivne": false, "pilt": "https://images.prismic.io/carwow/c340a77d-af56-4562-abfb-bd5518ccb292_2023+Tesla+Model+X+front+quarter+moving.jpg"}, 
+  {"nimi": "Nobe", "hind": 25000, "aktiivne": true, "pilt": "https://visionest.institute/wp-content/uploads/2023/07/i_6_NOBE-3.jpg"}
+]

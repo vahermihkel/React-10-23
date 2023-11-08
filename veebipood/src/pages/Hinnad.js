@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import hinnadJson from "../data/hinnad.json"
+import { Link } from 'react-router-dom';
 
 function Hinnad() {                 //     0   1  2  3 4  5   6 7 8
   const [hinnad, uuendaHinnad] = useState(hinnadJson);
@@ -73,9 +74,14 @@ function Hinnad() {                 //     0   1  2  3 4  5   6 7 8
           <button onClick={() => lisa(hind)}>+</button> 
           <button onClick={() => alerdi(hind)}>Viska välja alert</button> 
           <button onClick={() => korrutaKahega(hind, jrknr)}>Korruta kahega</button> 
+          <Link to={"/yksik-hind/" + jrknr + "/test/" + hind}>
+            <button>Vaata detailsemalt</button>
+          </Link>
         </div> )}
     </div>
   )
 }
+
+//App.js path="yksik-hind/:hinna_indeks/test/:hind_vaartus"
 
 export default Hinnad

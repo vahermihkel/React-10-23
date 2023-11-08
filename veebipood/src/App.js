@@ -14,6 +14,7 @@ import YksikToode from './pages/YksikToode';
 import YksikPood from './pages/YksikPood';
 import MuudaToode from './pages/MuudaToode';
 import HaldaTooteid from './pages/HaldaTooteid';
+import YksikHind from './pages/YksikHind';
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
         <Route path="poed" element={<Poed />} />
         <Route path="yksik-toode/:toote_indeks" element={<YksikToode />} />
         <Route path="yksik-pood/:poe_indeks" element={<YksikPood />} />
+        <Route path="yksik-hind/:hinna_indeks/test/:hind_vaartus" element={<YksikHind />} />
         <Route path="muuda-toode/:toote_jrknr" element={<MuudaToode />} />
         <Route path="*" element={<MitteLeitud />} />
       </Routes>

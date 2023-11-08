@@ -25,13 +25,17 @@ function Ostukorv() {
     uuendaOstukorv(ostukorv.slice());
   }
 
+// tavaline JavaScripti forEach funktsioon
+
   return (
     <div>
       {ostukorv.length > 0 && <div>Kokku {ostukorv.length} toode(t)</div>}
       {ostukorv.length > 0 && <button onClick={tyhjenda}>Tühjenda</button>}
       { ostukorv.map((toode, indeks) => 
         <div key={indeks}>
-          {toode} 
+          <img className="pilt" src={toode.pilt} alt="" />
+          <div>{toode.nimi}</div>
+          <div>{toode.hind}</div>
           <button onClick={() => lisa(toode)}>Lisa</button> 
           <button onClick={() => kustuta(indeks)}>Kustuta</button>
         </div> ) }

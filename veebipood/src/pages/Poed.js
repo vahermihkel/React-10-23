@@ -12,62 +12,62 @@ function Poed() {
 
   const sorteeriAZ = () => {
     //poed.sort();
-    poed.sort((a,b) => a.localeCompare(b));
+    poed.sort((a,b) => a.nimi.localeCompare(b.nimi));
     muudaPoed(poed.slice()); // slice kustutab ära mälukoha
   }
 
   const sorteeriZA = () => {
-    poed.sort((a,b) => b.localeCompare(a));
+    poed.sort((a,b) => b.nimi.localeCompare(a.nimi));
     muudaPoed(poed.slice()); // slice kustutab ära mälukoha
   }
 
   const sorteeriTahedKasvavalt = () => {
-    poed.sort((a,b) => a.length - b.length); // sorteerimiseks
+    poed.sort((a,b) => a.nimi.length - b.nimi.length); // sorteerimiseks
     muudaPoed(poed.slice()); // HTMLi muutmiseks
   }
 
   const sorteeriTahedKahanevalt = () => {
-    poed.sort((a,b) => b.length - a.length); // sorteerimiseks
+    poed.sort((a,b) => b.nimi.length - a.nimi.length); // sorteerimiseks
     muudaPoed(poed.slice()); // HTMLi muutmiseks
   }
 
   const sorteeriKolmandaTaheJargi = () => {                       //  012345678
-    poed.sort((a,b) => a[2].localeCompare(b[2])); // sorteerimiseks   Kristiine
+    poed.sort((a,b) => a.nimi[2].localeCompare(b.nimi[2])); // sorteerimiseks   Kristiine
     muudaPoed(poed.slice()); // HTMLi muutmiseks
   }
 
   const sorteeriSonadeArvuJargi = () => {                       //  012345678
-    poed.sort((a,b) => a.split(" ").length - b.split(" ").length); // sorteerimiseks   Kristiine
+    poed.sort((a,b) => a.nimi.split(" ").length - b.nimi.split(" ").length); // sorteerimiseks   Kristiine
     muudaPoed(poed.slice()); // HTMLi muutmiseks
   }
 
   const filtreeriEgaLoppevad = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.endsWith("e"));
+    const vastus = poedFailist.filter(yksPood => yksPood.nimi.endsWith("e"));
     muudaPoed(vastus);
   }
 
   const filtreeriKesSisaldabIsLyhendit = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.includes("is"));
+    const vastus = poedFailist.filter(yksPood => yksPood.nimi.includes("is"));
     muudaPoed(vastus);
   }
 
   const filtreeriKellelOn9Tahte = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.length === 9);
+    const vastus = poedFailist.filter(yksPood => yksPood.nimi.length === 9);
     muudaPoed(vastus);
   }
 
   const filtreeriKellelOnVahemalt7Tahte = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.length >= 7);
+    const vastus = poedFailist.filter(yksPood => yksPood.nimi.length >= 7);
     muudaPoed(vastus);
   }
 
   const filtreeriKellelOnKolmasTahtI = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood[2] === 'i');
+    const vastus = poedFailist.filter(yksPood => yksPood.nimi[2] === 'i');
     muudaPoed(vastus);
   }
 
   const filtreeriKellelOnRohkemKui1Sona = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.split(" ").length > 1);
+    const vastus = poedFailist.filter(yksPood => yksPood.nimi.split(" ").length > 1);
     muudaPoed(vastus);
   }
 
@@ -77,6 +77,10 @@ function Poed() {
   // 3. googeldate, küsite chatGPT (2h-3h, 2 päeva)
   // 4. töökaaslane
 
+  // 1. Poed.js failis, lisa 2 labelit ja inputi juurde (aadress ja telefon)
+  // 2. Lisa 2 useRefi juurde mõlemale uuele inputile
+  // 3. Pushi objekt
+  // 4. Kui pushid, siis võtmete väärtused tulevad ref.current.value kaudu
   const lisa = () => {
     poed.push(poodViide.current.value);
     muudaPoed(poed.slice());
@@ -93,6 +97,7 @@ function Poed() {
 
   return (
     <div>
+      <div>{poed.length} tk</div>
 
       <label>Pood</label> <br />
       <input ref={poodViide} type="text" /> <br />
@@ -116,9 +121,10 @@ function Poed() {
       <button onClick={filtreeriKellelOnKolmasTahtI}>Jäta alles kellel on 3-s täht 'i'</button>
       <button onClick={filtreeriKellelOnRohkemKui1Sona}>Jäta alles kellel on rohkem kui 1 sõna</button>
       { poed.map((yksPood, index) => 
-        <div key={yksPood} className="pood">
-          {yksPood}
+        <div key={yksPood.nimi} className="pood">
+          {yksPood.nimi}
           <button onClick={() => kustuta(index)}>x</button>
+          {/*App.js failis: path="yksik-pood/:poe_indeks" */}
           <Link to={"/yksik-pood/" + index}>
             <button>Vaata detailsemalt</button>
           </Link>

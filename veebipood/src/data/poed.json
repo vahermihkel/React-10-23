@@ -1,9 +1,9 @@
 [
-  "Ülemiste keskus",
-  "Viimsi kaubamaja",
-  "Rocca al Mare",
-  "Magistrali",
-  "Vesse",
-  "Kristiine",
-  "Järveotsa"
+  {"nimi": "Ülemiste keskus", "aadr": "Tulika 77", "tel": "123123"},
+  {"nimi": "Viimsi kaubamaja", "aadr": "Tallinna tn 68", "tel": "333"},
+  {"nimi": "Rocca al Mare", "aadr": "Loomaaia 82", "tel": "555"},
+  {"nimi": "Magistrali", "aadr": "Tammsaare 43", "tel": "321"},
+  {"nimi": "Vesse", "aadr": "Vesse 123", "tel": "222"},
+  {"nimi": "Kristiine", "aadr": "Endla 555", "tel": "444"},
+  {"nimi": "Järveotsa", "aadr": "Järve 20", "tel": "54321"}
 ]

@@ -13,10 +13,11 @@ function YksikToode() {
 
   return (
     <div>
-      <div>Toote nimi: { leitudToode }</div>
+      <img src={ leitudToode.pilt } alt="" />
+      <div>Toote nimi: { leitudToode.nimi }</div>
       <div>Toote järjekorranumber: { toote_indeks }</div>
-      <div>Toote pilt: TOOTE_PILT</div>
-      <div>Toote hind: TOOTE_HIND</div>
+      {/* <div>Toote pilt: TOOTE_PILT</div> */}
+      <div>Toote hind: { leitudToode.hind }</div>
     </div>
   )
 }

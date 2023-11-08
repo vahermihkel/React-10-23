@@ -31,9 +31,9 @@ function YksikPood() {
   return (
     <div>
       <div>Järjekorranumber: { poe_indeks }</div>
-      <div>Poe nimi: { leitudPood }</div>
-      <div>Telefon: POE_TELEFON</div>
-      <div>Aadress: POE_AADRESS</div>
+      <div>Poe nimi: { leitudPood.nimi }</div>
+      <div>Telefon: { leitudPood.tel }</div>
+      <div>Aadress: { leitudPood.aadr }</div>
     </div>
   )
 }

@@ -3,22 +3,36 @@ import tootedFailist from "../data/tooted.json"
 
 function LisaToode() {
   const [sonum, uuendaSonum] = useState("Lisa toode!");
-  const inputiLuger = useRef();
+  const nimiRef = useRef();
+  const hindRef = useRef();
+  const piltRef = useRef();
+  const aktiivneRef = useRef();
 
   // function lisa() {
   //   uuendaSonum("Toode lisatud: " + inputiLuger.current.value);
   // }
 
   const lisa = () => {
-    uuendaSonum("Toode lisatud: " + inputiLuger.current.value);
-    tootedFailist.push(inputiLuger.current.value);
+    uuendaSonum("Toode lisatud: " + nimiRef.current.value);
+    tootedFailist.push({
+      "nimi": nimiRef.current.value, 
+      "hind": Number(hindRef.current.value), 
+      "aktiivne": aktiivneRef.current.checked, 
+      "pilt": piltRef.current.value
+    });
   }
 
   return (
     <div>
       <div>{sonum}</div>
-      <label>Toode</label> <br />
-      <input ref={inputiLuger} type="text" /> <br />
+      <label>Nimi</label> <br />
+      <input ref={nimiRef} type="text" /> <br />
+      <label>Hind</label> <br />
+      <input ref={hindRef} type="number" /> <br />
+      <label>Pilt</label> <br />
+      <input ref={piltRef} type="text" /> <br />
+      <label>Aktiivne</label> <br />
+      <input ref={aktiivneRef} type="checkbox" /> <br />
       <button onClick={lisa}>Sisesta</button> <br />
     </div>
   )

@@ -1,18 +1,35 @@
-import React from 'react'
-// 1. impordi tooted failist
+import React, { useState } from 'react'
+import tootedFailist from '../data/tooted.json'
+import { Link } from 'react-router-dom';
+ 
+function HaldaTooted() {
+    const [tooted, uuendaTooted] = useState(tootedFailist);
 
-function HaldaTooteid() {
-  // 2. kuva kõik tooted .map() alusel HTMLs välja (Tooted.js failis on näide)
+    const kustuta = (indeks) => {
+        tooted.splice(indeks, 1);
+        uuendaTooted(tooted.slice());
+    }
 
-  // 3.(ei ole oluline) võimalda toodet failist kustutada (Ostukorv.js failis on näide)
-
-  // 4. kustutamise nupu kõrvale nagu "vaata detailsemalt" nupp, aga tekstiks
-  //   "muuda", mis viib aadressile:
-  //  <Route path="muuda-toode/:toote_jrknr" element={<MuudaToode />} />
-
-  return (
-    <div>HaldaTooteid</div>
-  )
+    // className={kogus >= 10 ? "kuldne" : undefined}
+    // kui on toode aktiivne, näita teda rohelisena, kui on mitteaktiivne, näita punasena
+ 
+    return (
+        <div>
+            { tooted.map((yksToode, indeks) =>
+                <div key={indeks}>
+                    {/* {n2itaTooteid} */}
+{/* Objects are not valid as a React child (found: object with keys {nimi, hind, aktiivne, pilt}) */}
+                <div>{yksToode.nimi}</div>
+                <div>{yksToode.hind}</div>
+                <div>{yksToode.pilt}</div>
+                <button onClick={() => kustuta(indeks)}>Kustuta toode</button>
+                <Link to={"/muuda-toode/" + indeks}>
+                    <button>Muuda</button>
+                </Link>
+                </div>)
+            }
+        </div>
+    )
 }
-
-export default HaldaTooteid
+ 
+export default HaldaTooted
