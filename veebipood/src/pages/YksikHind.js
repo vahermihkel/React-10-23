@@ -14,7 +14,7 @@ function YksikHind() {
       {/* <div>Indeks: {params.hinna_indeks}</div> */}
 
       <div>Väärtus: {hind_vaartus}</div>
-        {/* <div>Väärtus: {params.hind_vaartus}</div> */}
+      {/* <div>Väärtus: {params.hind_vaartus}</div> */}
     </div>
   )
 }

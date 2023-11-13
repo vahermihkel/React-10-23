@@ -20,9 +20,11 @@ function YksikPood() {
   // 4. nad ei tohi olla funktsiooni sees loodud
   // 5. nad ei tohi olla tingimuslikult loodud
 
-  const { poe_indeks } = useParams();
+  const { poe_nimi } = useParams();
   // useParams on URL muutuvate kohtade kättesaamiseks
-  const leitudPood = poedFailist[poe_indeks];
+  // const leitudPood = poedFailist[poe_indeks];
+  const leitudPood = poedFailist.find(yksPood => yksPood.nimi.replaceAll(" ", "-").toLowerCase() === poe_nimi);
+
 
   if (leitudPood === undefined) { // undefined on tühjus, seda ei leitud
     return (<div>Pilt / Toodet ei leitud</div>)
@@ -30,7 +32,7 @@ function YksikPood() {
 
   return (
     <div>
-      <div>Järjekorranumber: { poe_indeks }</div>
+      {/* <div>Järjekorranumber: { poe_indeks }</div> */}
       <div>Poe nimi: { leitudPood.nimi }</div>
       <div>Telefon: { leitudPood.tel }</div>
       <div>Aadress: { leitudPood.aadr }</div>

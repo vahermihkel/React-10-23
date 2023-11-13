@@ -27,6 +27,16 @@ function Ostukorv() {
 
 // tavaline JavaScripti forEach funktsioon
 
+  const arvutaKogusumma = () => {
+    let summa = 0;
+    // [{n: "C", h: 7}, {n: "F", h: 4}, {n: "S", h: 5}]
+    //     {n: "C", h: 7}  =>   7   =   0   +    7
+    //     {n: "F", h: 4}  =>  11   =   7   +    4
+    //     {n: "S", h: 5}  =>  16   =  11   +    5
+    ostukorv.forEach(toode => summa = summa + toode.hind);
+    return summa;
+  }
+
   return (
     <div>
       {ostukorv.length > 0 && <div>Kokku {ostukorv.length} toode(t)</div>}
@@ -43,6 +53,8 @@ function Ostukorv() {
       <Link to="/tooted">
         <button>Lisa mõni toode ostukorvi</button>
       </Link>
+
+      <div>{arvutaKogusumma()} €</div>
     </div>
   )
 }

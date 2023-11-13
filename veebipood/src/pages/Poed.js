@@ -95,8 +95,23 @@ function Poed() {
     muudaPoed(poed.slice());
   }
 
+  // const muudaEEette = () => {
+  //             // {"nimi": "Ülemiste keskus", "aadr": "Tulika 77", "tel": "123123"} => {"nimi": "EE-Ülemiste keskus"}
+  //   const vastus = poed.map(yksPood => {return {...yksPood, "nimi": "EE-" + yksPood.nimi}});
+  //   muudaPoed(vastus);
+  // }
+
+  const arvutaTahedKokku = () => {
+    let summa = 0;
+    poed.forEach(yksPood => summa = summa + yksPood.nimi.length);
+    return summa;
+  }
+
   return (
     <div>
+      {/* <button onClick={muudaEEette}>Muuda iga poe nimetusele "EE-" ette</button> */}
+      <div>{arvutaTahedKokku()}</div>
+
       <div>{poed.length} tk</div>
 
       <label>Pood</label> <br />
@@ -125,10 +140,12 @@ function Poed() {
           {yksPood.nimi}
           <button onClick={() => kustuta(index)}>x</button>
           {/*App.js failis: path="yksik-pood/:poe_indeks" */}
-          <Link to={"/yksik-pood/" + index}>
+          <Link to={"/yksik-pood/" + yksPood.nimi.replaceAll(" ", "-").toLowerCase()}>
             <button>Vaata detailsemalt</button>
           </Link>
         </div> )}
+
+
     </div>
   )
 }

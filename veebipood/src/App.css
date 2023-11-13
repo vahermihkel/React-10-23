@@ -35,6 +35,12 @@
   border-radius: 10px;
 }
 
+.pilt-mitteaktiivne {
+  width: 150px;
+  filter: grayscale(100%);
+  opacity: 50%;
+}
+
 .kuldne {
   color: goldenrod;
 }
@@ -54,4 +60,14 @@
 
 .aktiivne {
   color: lightblue;
+}
+
+.aktiivne-toode {
+  background-color: rgb(229, 238, 229);
+  border: 1px solid green;
+}
+
+.mitteaktiivne-toode {
+  background-color: rgb(241, 230, 230);
+  border: 1px solid red;
 }

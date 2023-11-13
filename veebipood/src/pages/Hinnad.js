@@ -54,8 +54,25 @@ function Hinnad() {                 //     0   1  2  3 4  5   6 7 8
     uuendaHinnad(hinnad.slice());
   }
 
+  const arvutaHinnadKokku = () => {
+    let kokku = 0;
+    hinnad.forEach(hind => kokku = kokku + hind );
+    // kokku = kokku + 11;
+    // kokku = kokku + 22;
+    // kokku = kokku + 55;
+    // kokku = kokku + 44;
+    // kokku = kokku + 8;
+    // kokku = kokku + 123;
+    // kokku = kokku + 23;
+    // kokku = kokku + 3;
+    // kokku = kokku + 9;
+    console.log("KÄIVITUSIN");
+    return kokku;
+  }
+
   return (
     <div>
+      <div>{arvutaHinnadKokku()}</div>
       <br />
       <label>Uus hind</label> <br />
       <input ref={hindViide} type="text" /> <br />

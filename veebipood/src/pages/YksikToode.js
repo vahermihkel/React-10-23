@@ -4,7 +4,7 @@ import tootedFailist from "../data/tooted.json"
 
 function YksikToode() {
   const { toote_indeks } = useParams();
-  const leitudToode = tootedFailist[toote_indeks]; 
+  const leitudToode = tootedFailist[toote_indeks];
   // kui tahan leida õiget toodet, võtan kõik tooted ja panen kandilised sulud lõppu, mille sisse indeksi (jrknr)
 
   if (leitudToode === undefined) {
@@ -13,11 +13,11 @@ function YksikToode() {
 
   return (
     <div>
-      <img src={ leitudToode.pilt } alt="" />
-      <div>Toote nimi: { leitudToode.nimi }</div>
-      <div>Toote järjekorranumber: { toote_indeks }</div>
+      <img src={leitudToode.pilt} alt="" />
+      <div>Toote nimi: {leitudToode.nimi}</div>
+      <div>Toote järjekorranumber: {toote_indeks}</div>
       {/* <div>Toote pilt: TOOTE_PILT</div> */}
-      <div>Toote hind: { leitudToode.hind }</div>
+      <div>Toote hind: {leitudToode.hind}</div>
     </div>
   )
 }
