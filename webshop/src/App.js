@@ -16,43 +16,45 @@ import Signup from './pages/auth/Signup';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import NotFound from './pages/global/NotFound';
+import { useTranslation } from 'react-i18next';
 
-// Favicon
-// Rakenduse tabi nimi muuta
-// Font muuta
-// Not Found leht tekitada
-// Firebase-i üles panna täpselt samamoodi nagu me varasemalt teinud oleme
+// 1. Tõlkige Login ja Signup labelid ja buttonid
+// 2. Lisage 3-4 keel Webshopi projekti --> i18n.js on vaja tekitada tõlked ja uued nupud navbari
+// 3. Pange "Uudised" projektile peale ka tõlge ja Bootstrap
 
 function App() {
+  const { t, i18n } = useTranslation();
+
+  const changeLangEn = () => {
+    i18n.changeLanguage("en");
+    localStorage.setItem("language", "en");
+  }
+
+  const changeLangEe = () => {
+    i18n.changeLanguage("ee");
+    localStorage.setItem("language", "ee");
+  }
+
   return (
     <div className="App">
 
     <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Webshop</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link as={Link} to="/admin">{t("nav.admin")}</Nav.Link>
+            <Nav.Link as={Link} to="/shops">{t("nav.shops")}</Nav.Link>
+            <Nav.Link as={Link} to="/contact">{t("nav.contact")}</Nav.Link>
+            <Nav.Link as={Link} to="/cart">{t("nav.cart")}</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">More deets</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Dank memes
-            </Nav.Link>
+            <img className="lang" src="/english.png" onClick={changeLangEn} alt="" />
+            <img className="lang" src="/estonian.png" onClick={changeLangEe} alt="" />
+            <Nav.Link as={Link} to="/login">{t("nav.login")}</Nav.Link>
+            <Nav.Link as={Link} to="/signup">{t("nav.signup")}</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -72,6 +74,7 @@ function App() {
       <Route path="admin/shops" element={ <MaintainShops /> } />
       <Route path="login" element={ <Login /> } />
       <Route path="signup" element={ <Signup /> } />
+      <Route path="*" element={ <NotFound /> } />
      </Routes>
     </div>
   );

@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bg-body-tertiary {
+  background-color: #f4f4f9 !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 1px;
+}
