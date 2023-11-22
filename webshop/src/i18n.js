@@ -17,6 +17,8 @@ const resources = {
       "nav.cart": "Cart",
       "nav.login": "Log in",
       "nav.signup": "Create user",
+      "email": "E-mail",
+      "password": "Password",
     }
   },
   ee: {
@@ -31,6 +33,8 @@ const resources = {
       "nav.cart": "Ostukorv",
       "nav.login": "Logi sisse",
       "nav.signup": "Registreeru",
+      "email": "E-mail",
+      "password": "Parool",
     }
   }
 };

@@ -15,3 +15,19 @@
 .lang:active {
   padding: 1px;
 }
+
+.map {
+  height: 300px;
+  margin: 3%;
+  border-radius: 10px;
+}
+
+.active {
+  border: 1px solid green;
+  background-color: rgb(244, 249, 244);
+}
+
+.inactive {
+  border: 1px solid red;
+  background-color: rgb(245, 239, 239);
+}
