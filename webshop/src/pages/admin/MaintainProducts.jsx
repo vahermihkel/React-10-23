@@ -6,26 +6,29 @@ function MaintainProducts() {
   const [products, setProducts] = useState(productsFromFile);
   const searchedRef = useRef();
 
-  const deleteProduct = () => {
-    // KODUS
-    // refreshiga tuleb tagasi
-    // mine vaata ka avalehele, kas on kustunud
-    // peab kustutama failist, mitte products useState muutujast
-  };
+  const deleteProduct = (index) => {
+    productsFromFile.splice(index, 1);
+    setProducts(productsFromFile.slice());
+  }
 
   const searchFromProducts = () => {
-    const result = productsFromFile.filter(product => 
-      product.name.toLowerCase().includes(searchedRef.current.value.toLowerCase()) 
+    const result = productsFromFile.filter((product) =>
+      product.name
+        .toLowerCase()
+        .includes(searchedRef.current.value.toLowerCase())
     );
     setProducts(result);
-  }
+  };
 
   return (
     <div>
       <div>{products.length} tk</div>
       <input ref={searchedRef} onChange={searchFromProducts} type="text" />
-      {products.map((product) => (
-        <div key={product.id} className={product.active ? "active" : "inactive" }>
+      {products.map((product, index) => (
+        <div
+          key={product.id}
+          className={product.active ? "active" : "inactive"}
+        >
           <img src={product.image} alt="" />
           <div>{product.id}</div>
           <div>{product.name}</div>
@@ -33,7 +36,7 @@ function MaintainProducts() {
           <div>{product.description}</div>
           <div>{product.category}</div>
           <div>{product.active + 0}</div>
-          <button>Kustuta</button>
+          <button onClick={() => deleteProduct(index)}>Kustuta</button>
           <Link to={"/admin/edit/" + product.id}>
             <button>Muuda</button>
           </Link>

@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "mihkel-veebipood-10-2023",
     "public": "build",
     "ignore": [
       "firebase.json",

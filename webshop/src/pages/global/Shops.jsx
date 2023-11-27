@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Map from '../../components/Map';
+import { Button } from '@mui/material';
 
 function Shops() {
   const [coordinaates, setCoordinates] = useState({lngLat: [59.4378, 24.7574], zoom: 11});
@@ -7,12 +8,11 @@ function Shops() {
   // KODUS: Tehke Helsinkisse ja Pärnusse ka pood juurde
 
   return (<div>
-    <button onClick={() => setCoordinates({lngLat: [58.7921, 25.7572], zoom: 6})}>Kõik poed</button>
-    <button onClick={() => setCoordinates({lngLat: [59.4378, 24.7574], zoom: 11})}>Kõik Tallinna poed</button>
-
-    <button onClick={() => setCoordinates({lngLat: [59.4231, 24.7991], zoom: 13})}>Ülemiste</button>
-    <button onClick={() => setCoordinates({lngLat: [59.4277, 24.7193], zoom: 13})}>Kristiine</button>
-    <button onClick={() => setCoordinates({lngLat: [58.3779, 26.7306], zoom: 13})}>Tasku keskus</button>
+    <Button onClick={() => setCoordinates({lngLat: [58.7921, 25.7572], zoom: 6})}>Kõik poed</Button>
+    <Button onClick={() => setCoordinates({lngLat: [59.4378, 24.7574], zoom: 11})}>Kõik Tallinna poed</Button>
+    <Button onClick={() => setCoordinates({lngLat: [59.4231, 24.7991], zoom: 13})}>Ülemiste</Button>
+    <Button onClick={() => setCoordinates({lngLat: [59.4277, 24.7193], zoom: 13})}>Kristiine</Button>
+    <Button onClick={() => setCoordinates({lngLat: [58.3779, 26.7306], zoom: 13})}>Tasku keskus</Button>
     <Map mapCoordinaates={coordinaates}  />
   </div>)
 }
