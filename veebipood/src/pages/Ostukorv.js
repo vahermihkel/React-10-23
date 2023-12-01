@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import ostukorvFailist from "../data/ostukorv.json"
+// import ostukorvFailist from "../data/ostukorv.json"
 
 function Ostukorv() {
-  const [ostukorv, uuendaOstukorv] = useState(ostukorvFailist); 
+  const [ostukorv, uuendaOstukorv] = useState(JSON.parse(localStorage.getItem("ostukorv")) || []); 
 
   const lisa = (uus) => {
     ostukorv.push(uus);
     uuendaOstukorv(ostukorv.slice());
+    localStorage.setItem("ostukorv", JSON.stringify(ostukorv));
   }
   
   const kustuta = (jrknr) => {
     ostukorv.splice(jrknr,1); // mitmendat, mitu tk
     uuendaOstukorv(ostukorv.slice());
+    localStorage.setItem("ostukorv", JSON.stringify(ostukorv));
   }
 
   // kus on võimalik tekitada uusi muutujaid?
@@ -23,6 +25,7 @@ function Ostukorv() {
   const tyhjenda = () => {
     ostukorv.splice(0);
     uuendaOstukorv(ostukorv.slice());
+    localStorage.setItem("ostukorv", JSON.stringify(ostukorv));
   }
 
 // tavaline JavaScripti forEach funktsioon

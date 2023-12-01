@@ -30,7 +30,13 @@ function HomePage() {
 
                                     // "[{},{},{}]"   --->  [{},{},{}]
     const cartFromLS = JSON.parse(localStorage.getItem("cart")) || [];
-    cartFromLS.push(product);
+    const index = cartFromLS.findIndex(cartProduct => cartProduct.toode.id === product.id);
+    if (index !== -1) { // kui ei leita, siis järjekorranumber on -1
+    // if (index >= 0) { kui leitakse, on järjekorranumber suurem või võrdne 0ga
+      cartFromLS[index].kogus = cartFromLS[index].kogus + 1;
+    } else {
+      cartFromLS.push({"kogus": 1, "toode": product});
+    }
     localStorage.setItem("cart", JSON.stringify(cartFromLS));
     // setProducts(products.slice());
 

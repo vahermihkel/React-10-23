@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react'
-import poedFailist from "../data/poed.json" 
+// import poedFailist from "../data/poed.json" 
 import { Link } from 'react-router-dom';
 
-function Poed() {
-  const [poed, muudaPoed] = useState(poedFailist.slice());
+function Poed() {                      // null
+  const [poed, muudaPoed] = useState(JSON.parse(localStorage.getItem("poed")) || []);
   const poodViide = useRef(); // viide <- tõlge referencest, mis on ref lühidalt
 
   const originaali = () => {
-    muudaPoed(poedFailist.slice());
+    muudaPoed(JSON.parse(localStorage.getItem("poed")) || []);
   }
 
   const sorteeriAZ = () => {
@@ -42,32 +42,32 @@ function Poed() {
   }
 
   const filtreeriEgaLoppevad = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.nimi.endsWith("e"));
+    const vastus = JSON.parse(localStorage.getItem("poed")).filter(yksPood => yksPood.nimi.endsWith("e"));
     muudaPoed(vastus);
   }
 
   const filtreeriKesSisaldabIsLyhendit = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.nimi.includes("is"));
+    const vastus = JSON.parse(localStorage.getItem("poed")).filter(yksPood => yksPood.nimi.includes("is"));
     muudaPoed(vastus);
   }
 
   const filtreeriKellelOn9Tahte = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.nimi.length === 9);
+    const vastus = JSON.parse(localStorage.getItem("poed")).filter(yksPood => yksPood.nimi.length === 9);
     muudaPoed(vastus);
   }
 
   const filtreeriKellelOnVahemalt7Tahte = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.nimi.length >= 7);
+    const vastus = JSON.parse(localStorage.getItem("poed")).filter(yksPood => yksPood.nimi.length >= 7);
     muudaPoed(vastus);
   }
 
   const filtreeriKellelOnKolmasTahtI = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.nimi[2] === 'i');
+    const vastus = JSON.parse(localStorage.getItem("poed")).filter(yksPood => yksPood.nimi[2] === 'i');
     muudaPoed(vastus);
   }
 
   const filtreeriKellelOnRohkemKui1Sona = () => {
-    const vastus = poedFailist.filter(yksPood => yksPood.nimi.split(" ").length > 1);
+    const vastus = JSON.parse(localStorage.getItem("poed")).filter(yksPood => yksPood.nimi.split(" ").length > 1);
     muudaPoed(vastus);
   }
 
@@ -82,8 +82,9 @@ function Poed() {
   // 3. Pushi objekt
   // 4. Kui pushid, siis võtmete väärtused tulevad ref.current.value kaudu
   const lisa = () => {
-    poed.push(poodViide.current.value);
+    poed.push({nimi: poodViide.current.value});
     muudaPoed(poed.slice());
+    localStorage.setItem("poed", JSON.stringify(poed));
     // console.log("KÄIVITUS");
   }
 
@@ -160,4 +161,11 @@ export default Poed
   //   telefonid.sort(); // siia tuleb tagataustal ["Huawei", "iPhone", "Samsung"]
   //   uuendaTelefonid(telefonid.slice()); // sulgude sisse tuleb tagataustal ["Huawei", "iPhone", "Samsung"]
   // }                                     // aga ilma pärinemisjäljeta (mälukohata)
+
+
+  // .forEach is not a function
+  // .map is not a function
+  // Array asemel on mingi muu tüüp (String)
+
+  // cannot read null <-- tuleb tühjus (localStoragest, võtit pole)
 

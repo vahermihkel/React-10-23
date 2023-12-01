@@ -1,10 +1,12 @@
 import React, { useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import tootedFailist from "../data/tooted.json"
+// import tootedFailist from "../data/tooted.json"
  
 function MuudaToode() {
+  const tootedLocalStoragest = JSON.parse(localStorage.getItem("tooted")) || [];
+
   const {toote_jrknr} = useParams();
-  const leitudToode = tootedFailist[toote_jrknr];
+  const leitudToode = tootedLocalStoragest[toote_jrknr];
   const nimiViide = useRef(); // nameRef();
   const hindViide = useRef();
   const piltViide = useRef();
@@ -12,7 +14,7 @@ function MuudaToode() {
   const navigate = useNavigate(); // on hook JavaScripti poole peal URLi muutmiseks
 
   const muuda = () => {
-    tootedFailist[toote_jrknr] = {
+    tootedLocalStoragest[toote_jrknr] = {
       "nimi": nimiViide.current.value, 
       "hind": Number(hindViide.current.value), 
       "aktiivne": aktiivneViide.current.checked, 
@@ -20,6 +22,7 @@ function MuudaToode() {
     };
     // Suuna teda haldamise lehele
     navigate("/halda");
+    localStorage.setItem("tooted", JSON.stringify(tootedLocalStoragest));
   }
 
   // muutmine ja kustutamine käivad mõlemad AINULT järjekorranumbri alusel

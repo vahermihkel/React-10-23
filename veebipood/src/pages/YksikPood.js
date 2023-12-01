@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import poedFailist from "../data/poed.json"
+// import poedFailist from "../data/poed.json"
 
 function YksikPood() {
   // hookid:
@@ -23,7 +23,7 @@ function YksikPood() {
   const { poe_nimi } = useParams();
   // useParams on URL muutuvate kohtade kättesaamiseks
   // const leitudPood = poedFailist[poe_indeks];
-  const leitudPood = poedFailist.find(yksPood => yksPood.nimi.replaceAll(" ", "-").toLowerCase() === poe_nimi);
+  const leitudPood = (JSON.parse(localStorage.getItem("poed")) || []).find(yksPood => yksPood.nimi.replaceAll(" ", "-").toLowerCase() === poe_nimi);
 
 
   if (leitudPood === undefined) { // undefined on tühjus, seda ei leitud

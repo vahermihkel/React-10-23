@@ -1,10 +1,12 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import tootedFailist from "../data/tooted.json"
+// import tootedFailist from "../data/tooted.json"
 
 function YksikToode() {
+  const tootedLocalStoragest = JSON.parse(localStorage.getItem("tooted")) || [];
+
   const { toote_indeks } = useParams();
-  const leitudToode = tootedFailist[toote_indeks];
+  const leitudToode = tootedLocalStoragest[toote_indeks];
   // kui tahan leida õiget toodet, võtan kõik tooted ja panen kandilised sulud lõppu, mille sisse indeksi (jrknr)
 
   if (leitudToode === undefined) {

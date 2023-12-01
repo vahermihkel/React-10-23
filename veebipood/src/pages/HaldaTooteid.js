@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
-import tootedFailist from '../data/tooted.json'
+// import tootedFailist from '../data/tooted.json'
 import { Link } from 'react-router-dom';
 
 function HaldaTooted() {
-    const [tooted, uuendaTooted] = useState(tootedFailist);
+    // const tootedLocalStoragest = JSON.parse(localStorage.getItem("tooted")) || [];
+    // const [tooted, uuendaTooted] = useState(tootedLocalStoragest);
+
+
+    const [tooted, uuendaTooted] = useState(JSON.parse(localStorage.getItem("tooted")) || []);
 
     const kustuta = (indeks) => {
         tooted.splice(indeks, 1);
         uuendaTooted(tooted.slice());
+        localStorage.setItem("tooted", JSON.stringify(tooted));
     }
 
     // className={kogus >= 10 ? "kuldne" : undefined}

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import ostukorvFailist from "../data/ostukorv.json"; // ei tehta muud kui juurde lisamiseks
-import tootedFailist from "../data/tooted.json"; // kuvab välja HTMLs
+// import ostukorvFailist from "../data/ostukorv.json"; // ei tehta muud kui juurde lisamiseks
+// import tootedFailist from "../data/tooted.json"; // kuvab välja HTMLs
 import { Link } from 'react-router-dom';
 
 function Tooted() {
-  const [tooted, uuendaTooted] = useState(tootedFailist);
+  const [tooted, uuendaTooted] = useState(JSON.parse(localStorage.getItem("tooted")) || []);
 
   const lisaOstukorvi = (lisatav) => {
-    ostukorvFailist.push(lisatav);
+    // ostukorvFailist.push(lisatav);
+    const ostukorvLS = JSON.parse(localStorage.getItem("ostukorv")) || [];
+    ostukorvLS.push(lisatav);
+    localStorage.setItem("ostukorv", JSON.stringify(ostukorvLS));
   } 
 
   // filtreerida ja sorteerida
@@ -37,17 +40,17 @@ function Tooted() {
   // i18next ehk tõlge Reactis
 
   const filtreeriNimiB = () => {
-    const vastus = tootedFailist.filter(toode => toode.nimi.startsWith("B"));
+    const vastus = (JSON.parse(localStorage.getItem("tooted")) || []).filter(toode => toode.nimi.startsWith("B"));
     uuendaTooted(vastus);
   }
 
   const filtreeriNimiN = () => {
-    const vastus = tootedFailist.filter(toode => toode.nimi.startsWith("N"));
+    const vastus = (JSON.parse(localStorage.getItem("tooted")) || []).filter(toode => toode.nimi.startsWith("N"));
     uuendaTooted(vastus);
   }
 
   const filtreeriNimiT = () => {
-    const vastus = tootedFailist.filter(toode => toode.nimi.startsWith("T"));
+    const vastus = (JSON.parse(localStorage.getItem("tooted")) || []).filter(toode => toode.nimi.startsWith("T"));
     uuendaTooted(vastus);
   }
 

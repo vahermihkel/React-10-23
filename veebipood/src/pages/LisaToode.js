@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import tootedFailist from "../data/tooted.json"
+// import tootedFailist from "../data/tooted.json"
 
 function LisaToode() {
   const [sonum, uuendaSonum] = useState("Lisa toode!");
@@ -13,13 +13,16 @@ function LisaToode() {
   // }
 
   const lisa = () => {
-    uuendaSonum("Toode lisatud: " + nimiRef.current.value);
-    tootedFailist.push({
+    const tooted = JSON.parse(localStorage.getItem("tooted")) || [];
+    tooted.push({
       "nimi": nimiRef.current.value, 
       "hind": Number(hindRef.current.value), 
       "aktiivne": aktiivneRef.current.checked, 
       "pilt": piltRef.current.value
     });
+    localStorage.setItem("tooted", JSON.stringify(tooted));
+
+    uuendaSonum("Toode lisatud: " + nimiRef.current.value);
   }
 
   return (

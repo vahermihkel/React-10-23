@@ -1,27 +1,42 @@
 import React, { useState } from 'react'
 // import cartFromFail from "../../data/cart.json"
- 
+import "../../css/Cart.css";
  
 function Cart() {
  
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || [] );
- 
+  
+  const calculateCartSum = () => {
+    let amount = 0;
+    cart.forEach(product => amount = amount + product.toode.price * product.kogus)
+    return amount.toFixed(2);
+  }
+
+  const emptyCart = () => {
+    cart.splice(0);
+    setCart(cart.slice());
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+  const decreaseQuantity = (index) => {
+    cart[index].kogus = cart[index].kogus - 1;
+    if (cart[index].kogus === 0) {
+      cart.splice(index, 1);
+    }
+    setCart(cart.slice());
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
+  const increaseQuantity = (index) => {
+    cart[index].kogus = cart[index].kogus + 1;
+    setCart(cart.slice());
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
+
   const removeFromCart = (index) => {
     cart.splice(index, 1)
     setCart(cart.slice());
     localStorage.setItem("cart", JSON.stringify(cart));
-  }
- 
-  const emptyCart = () => {
-    cart.splice(0)
-    setCart(cart.slice());
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
- 
-  const calculateCartSum = () => {
-    let amount = 0;
-    cart.forEach(product => amount = amount + product.price)
-    return amount.toFixed(2);
   }
  
   return (
@@ -40,15 +55,17 @@ function Cart() {
             alt="" />}
  
       {cart.map((product, index) =>
-        <div key={product} >
-          <img src={product.image} alt="" />
-          {/* <div> {product.id} </div> */}
-          <div> {product.name} </div>
-          <div> {product.price} </div>
-          {/* <div> {product.description} </div>
-          <div> {product.category} </div>
-          <div> {product.active + 0} </div> */}
-          <button onClick={() => removeFromCart(index)} >X</button>
+        <div className="product" key={product.toode.id} >
+          <img className="image" src={product.toode.image} alt="" />
+          <div className="name"> {product.toode.name} </div>
+          <div className="price"> {product.toode.price.toFixed(2)} €</div>
+          <div className="quantity">
+            <img className="button" src="/minus.png" alt="" onClick={() => decreaseQuantity(index)} />
+            <div> {product.kogus} tk</div>
+            <img className="button" src="/plus.png" alt="" onClick={() => increaseQuantity(index)} />
+          </div>
+          <div className="total"> {(product.toode.price * product.kogus).toFixed(2)} </div>
+          <img className="button" src="/remove.png" alt="" onClick={() => removeFromCart(index)} />
         </div>)}
     </div>
   )
