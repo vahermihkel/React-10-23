@@ -1,24 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-// import { useTranslation } from 'react-i18next';
-// import Nav from 'react-bootstrap/Nav';
-import productsFromFile from "../../data/products.json"
-// import cartFromFail from "../../data/cart.json"
 import { Button } from '@mui/material';
-// import Button from '@mui/material/Button';
- 
+import "../../css/HomePage.css"
+
 // 27.11   13. E localStorage-sse massiiv (array)  --->   KOJU suur hunnik kodutöid
 //          MUI kujundust
 // 29.11   14. K objekt ostukorvis ---> kogused ostukorvis iga toote juures
 //        K kujundus ostukorvis ---> KOJU ei saada
 // 02.12   15. L API päringud -> pakiautomaatide võtmine ---> KOJU saadan mõne faili
 // 06.12   16. K andmebaasi kõik meie kategooriad, tooted, poed jne.... ---> saadan proovitöö Nortali osas
-// 11.12   17.  Alamkomponendid, Context, vaatame proovitöö üle ---> saadan veel mõned proovitööd 2-3tk
-// 21.12   18. Lõpuprojekti esitlemine
+// 17.12   17.  Alamkomponendid, CSS moodulid, Context, vaatame proovitöö üle ---> saadan veel mõned proovitööd 2-3tk
+// 30.12   18. Lõpuprojekti esitlemine    1.5h
 
 function HomePage() {
-  // const { t, } = useTranslation();
-  const [products, setProducts] = useState(productsFromFile.slice());
+  const [products, setProducts] = useState([]); // Kõikuvas seisundis (HTMLs)
+  const [dbProducts, setDbProducts] = useState([]); // ALATI ORIGINAALSED TOOTED 481tk
+
+  // uef + import
+  useEffect(() => {
+    fetch("https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/products.json")
+      .then(res => res.json())
+      .then(json => {
+        setProducts(json);
+        setDbProducts(json);
+      })
+  }, []);
  
   const addToCart = (product) => {
     // localStorage.setItem("teema", "tume") <--- võti oli sama, väärtus erinev
@@ -49,32 +55,32 @@ function HomePage() {
   }
  
   const sortAZ = () => {
-    productsFromFile.sort((a,b) => a.name.localeCompare(b.name));
-    setProducts(productsFromFile.slice());
+    products.sort((a,b) => a.name.localeCompare(b.name));
+    setProducts(products.slice());
   }
  
   const sortZA = () => {
-    productsFromFile.sort((a,b) => b.name.localeCompare(a.name));
-    setProducts(productsFromFile.slice());
+    products.sort((a,b) => b.name.localeCompare(a.name));
+    setProducts(products.slice());
   }
  
   const sortPricesAsc = () => {
-    productsFromFile.sort((a,b) => a.price - b.price);
-    setProducts(productsFromFile.slice());
+    products.sort((a,b) => a.price - b.price);
+    setProducts(products.slice());
   }
  
   const sortPricesDesc = () => {
-    productsFromFile.sort((a,b) => b.price - a.price);
-    setProducts(productsFromFile.slice());
+    products.sort((a,b) => b.price - a.price);
+    setProducts(products.slice());
   }
  
   const filterByFigure = () => {
-    const filteredProducts = productsFromFile.filter(product => product.category.toLowerCase() === "figure");
+    const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "figure");
     setProducts(filteredProducts);
   }
  
   const filterByLego = () => {
-    const filteredProducts = productsFromFile.filter(product => product.category.toLowerCase() === "lego");
+    const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "lego");
     setProducts(filteredProducts);
   }
 
@@ -84,7 +90,7 @@ function HomePage() {
   // }
  
   const filterByStarWars = () => {
-    const filteredProducts = productsFromFile.filter(product => product.category.toLowerCase() === "star wars");
+    const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "star wars");
     setProducts(filteredProducts);
   }
  
@@ -99,22 +105,18 @@ function HomePage() {
         <button onClick={filterByStarWars} >Starwars</button>
         <button onClick={filterByFigure} >Figure</button> 
  
-        {products.map((product, index) =>  
-          <div key={index}> 
-            <img src={product.image} alt="" />
-            <div> {product.name} </div>
-            <div> {product.price} </div>
-    
-            {/* <Link to={"/cart"} ></Link> */}
-            {/* <Button >Contained</Button> */}
-            <Button variant="contained" onClick={() => addToCart (product)  }>Add to Cart</Button>
-    
-            <Link to={"/product/" + product.id} >
-              <button>View Product</button>
-            </Link>
-    
-          </div>)}
-        {/* <Nav.Link as={Link} to="/">{t("nav.homepage")}</Nav.Link> */}
+        <div className="products">
+          {products.map((product, index) =>  
+            <div key={index} className="home-product"> 
+              <img className="home-image" src={product.image} alt="" />
+              <div className="home-name"> {product.name} </div>
+              <div> {product.price} </div>
+              <Button variant="contained" onClick={() => addToCart (product)  }>Add to Cart</Button>
+              <Link to={"/product/" + product.id} >
+                <button>View Product</button>
+              </Link>
+            </div>)}
+        </div>
     </div>
   )
 }

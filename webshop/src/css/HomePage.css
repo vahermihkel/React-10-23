@@ -1,0 +1,25 @@
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  margin: 0 3%;
+}
+
+.home-product {
+  border: 1px solid lightgray;
+  padding: 10px;
+}
+
+.home-image {
+  width: 150px;
+  height: 150px;
+  transition: 0.5s;
+}
+
+.home-name {
+  height: 50px;
+}
+
+.home-product:hover .home-image {
+  transform: scale(1.05);
+  transition: 0.5s;
+}

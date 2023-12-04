@@ -18,6 +18,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NotFound } from './pages/global/NotFound';
 import { useTranslation } from 'react-i18next';
+import Supplier from './pages/admin/Supplier';
 
 // 1. Tõlkige Login ja Signup labelid ja buttonid
 // 2. Lisage 3-4 keel Webshopi projekti --> i18n.js on vaja tekitada tõlked ja uued nupud navbari
@@ -84,6 +85,7 @@ function App() {
       <Route path="admin/products" element={ <MaintainProducts /> } />
       <Route path="admin/categories" element={ <MaintainCategories /> } />
       <Route path="admin/shops" element={ <MaintainShops /> } />
+      <Route path="admin/supplier" element={ <Supplier /> } />
       <Route path="login" element={ <Login /> } />
       <Route path="signup" element={ <Signup /> } />
       <Route path="*" element={ <NotFound /> } />

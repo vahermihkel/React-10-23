@@ -31,3 +31,12 @@
   border: 1px solid red;
   background-color: rgb(245, 239, 239);
 }
+
+th, td {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+th {
+  background-color: lightgray;
+}

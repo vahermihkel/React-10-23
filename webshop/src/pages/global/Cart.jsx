@@ -1,11 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import cartFromFail from "../../data/cart.json"
 import "../../css/Cart.css";
  
 function Cart() {
  
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || [] );
-  
+  const [parcelMachines, setParcelMachines] = useState([]);
+
+  // uef
+  useEffect(() => {
+    fetch("https://www.omniva.ee/locations.json")
+      .then(response => response.json())
+      .then(json => setParcelMachines(json))
+  }, []);
+
+  // const [parcelMachines, setParcelMachines] = useState(parcelMachinesFromFile);
+
   const calculateCartSum = () => {
     let amount = 0;
     cart.forEach(product => amount = amount + product.toode.price * product.kogus)
@@ -67,6 +77,12 @@ function Cart() {
           <div className="total"> {(product.toode.price * product.kogus).toFixed(2)} </div>
           <img className="button" src="/remove.png" alt="" onClick={() => removeFromCart(index)} />
         </div>)}
+
+
+        <select>{parcelMachines
+                    // .filter(pm => pm.NAME !== "1. eelistus/Picapac pakiautomaat")
+                    .filter(pm => pm.A0_NAME === "EE")
+                    .map(pm => <option key={pm.NAME}>{pm.NAME}</option>)}</select>
     </div>
   )
 }
