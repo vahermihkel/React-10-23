@@ -1,17 +1,7 @@
 import React from 'react'
-import { useRef, useState } from 'react'
-import productsFromFile from '../../data/products.json'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ToastContainer, toast } from 'react-toastify'
- 
-// 8. Tehke 7 erinevat labelit ja inputi
-// 9. Tehke 7 erinevat useRefi, mille panime ükshaaval inputi sisse
-// 10. Tehke nupp, mis siduge ära funktsiooniga
-// 11. Kõikide toodete hulka lisage see toode, 
-//          vastavalt mis oli refide current valuede sees
-// 12. HTMLs numbritele type "number" ja funktsioonis numbritele Number(), 
-//        booleanitele checked
-// Vaadake nii EditProducti kui ka eesti keelset projekti
  
 function AddProduct() {
   const idRef = useRef();
@@ -23,6 +13,25 @@ function AddProduct() {
   const activeRef = useRef();
   const [idUnique, setIdUnique] = useState(true);
   const { t } = useTranslation();
+  const [dbProducts, setDbProducts] = useState([]); // ALATI ORIGINAALSED TOOTED 481tk
+  const url = "https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/products.json";
+  const categoryUrl = "https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/categories.json";
+  const [categories, setCategories] = useState([]);
+
+  // uef + import
+  useEffect(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(json => {
+        setDbProducts(json);
+      })
+
+    fetch(categoryUrl)
+      .then(res => res.json())
+      .then(json => {
+        setCategories(json);
+      })
+  }, []);
  
   const addProduct = () => {
     // refreshiga tuleb tagasi
@@ -33,15 +42,17 @@ function AddProduct() {
       return;
     }
  
-    productsFromFile.push( {
+    dbProducts.push( {
       "id": Number(idRef.current.value),
       "image": imageRef.current.value,
       "name": nameRef.current.value,
       "price": Number(priceRef.current.value),
       "description": descriptionRef.current.value,
       "category": categoryRef.current.value,
-      "active": activeRef.current.value.checked
+      "active": activeRef.current.checked
     });
+    fetch(url, {"method": "PUT", "body": JSON.stringify(dbProducts)})
+
     toast("Toode lisatud!");
 
     idRef.current.value = "";
@@ -55,7 +66,7 @@ function AddProduct() {
  
   const checkIdUniqueness = () => {
     // siin sees kontrollime, kas kellegil on selline ID olemas nagu idRef.current.value sees
-    const result = productsFromFile.find(product => product.id === Number(idRef.current.value));
+    const result = dbProducts.find(product => product.id === Number(idRef.current.value));
  
     if (result === undefined) {
       setIdUnique(true);
@@ -76,7 +87,10 @@ function AddProduct() {
       <label>{t("image")}</label> <br />
       <input ref={imageRef} type="text"></input> <br />
       <label>{t("category")}</label> <br />
-      <input ref={categoryRef} type="text"></input> <br />
+      {/* <input ref={categoryRef} type="text"></input> <br /> */}
+      <select ref={categoryRef}>
+        { categories.map(category => <option key={category.name}>{category.name}</option> )}
+      </select><br />
       <label>{t("description")}</label> <br />
       <input ref={descriptionRef} type="text"></input> <br />
       <label>{t("active")}</label> <br />

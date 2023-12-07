@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import "../../css/HomePage.css"
+import { Spinner } from 'react-bootstrap';
 
 // 27.11   13. E localStorage-sse massiiv (array)  --->   KOJU suur hunnik kodutöid
 //          MUI kujundust
@@ -9,20 +10,39 @@ import "../../css/HomePage.css"
 //        K kujundus ostukorvis ---> KOJU ei saada
 // 02.12   15. L API päringud -> pakiautomaatide võtmine ---> KOJU saadan mõne faili
 // 06.12   16. K andmebaasi kõik meie kategooriad, tooted, poed jne.... ---> saadan proovitöö Nortali osas
-// 17.12   17.  Alamkomponendid, CSS moodulid, Context, vaatame proovitöö üle ---> saadan veel mõned proovitööd 2-3tk
-// 30.12   18. Lõpuprojekti esitlemine    1.5h
+// 17.12 13.00-16.15   17.  Alamkomponendid, CSS moodulid, Context, vaatame proovitöö üle ---> saadan veel mõned proovitööd 2-3tk
+// 30.12 14.00-15.30   18. Lõpuprojekti esitlemine    1.5h
+
+// Rahel:
+// 02.12 4ak/h
+// 13.12 2ak/h
+
+// Heiki:
+// 02.12
+// 06.12
+// 17.12
+// 20.12
 
 function HomePage() {
   const [products, setProducts] = useState([]); // Kõikuvas seisundis (HTMLs)
   const [dbProducts, setDbProducts] = useState([]); // ALATI ORIGINAALSED TOOTED 481tk
+  const url = "https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/products.json";
+  const categoryUrl = "https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/categories.json";
+  const [categories, setCategories] = useState([]);
 
   // uef + import
   useEffect(() => {
-    fetch("https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/products.json")
+    fetch(url)
       .then(res => res.json())
       .then(json => {
         setProducts(json);
         setDbProducts(json);
+      })
+
+    fetch(categoryUrl)
+      .then(res => res.json())
+      .then(json => {
+        setCategories(json);
       })
   }, []);
  
@@ -74,24 +94,33 @@ function HomePage() {
     setProducts(products.slice());
   }
  
-  const filterByFigure = () => {
-    const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "figure");
-    setProducts(filteredProducts);
-  }
+  // const filterByFigure = () => {
+  //   const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "figure");
+  //   setProducts(filteredProducts);
+  // }
  
-  const filterByLego = () => {
-    const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "lego");
+  // const filterByLego = () => {
+  //   const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "lego");
+  //   setProducts(filteredProducts);
+  // }
+
+  // // const filterByAllegor = () => {
+  // //   const filteredProducts = productsFromFile.filter (product => product.name.toLowerCase().includes("allegor"));
+  // //   setProducts(filteredProducts.slice());
+  // // }
+ 
+  // const filterByStarWars = () => {
+  //   const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "star wars");
+  //   setProducts(filteredProducts);
+  // }
+
+  const filterByCategory = (categoryClicked) => {
+    const filteredProducts = dbProducts.filter(product => product.category === categoryClicked);
     setProducts(filteredProducts);
   }
 
-  // const filterByAllegor = () => {
-  //   const filteredProducts = productsFromFile.filter (product => product.name.toLowerCase().includes("allegor"));
-  //   setProducts(filteredProducts.slice());
-  // }
- 
-  const filterByStarWars = () => {
-    const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "star wars");
-    setProducts(filteredProducts);
+  if (dbProducts.length === 0 || categories.length === 0) {
+    return <Spinner />
   }
  
   return (
@@ -101,9 +130,10 @@ function HomePage() {
         <button onClick={sortZA} >SortZ-A</button>
         <button onClick={sortPricesAsc} >Sort price Asc</button>
         <button onClick={sortPricesDesc} >Sort price Desc</button>
-        <button onClick={filterByLego} >Lego</button>
+        {/* <button onClick={filterByLego} >Lego</button>
         <button onClick={filterByStarWars} >Starwars</button>
-        <button onClick={filterByFigure} >Figure</button> 
+        <button onClick={filterByFigure} >Figure</button>  */}
+        { categories.map( category =>  <button onClick={() => filterByCategory(category.name)}>{category.name}</button>) }
  
         <div className="products">
           {products.map((product, index) =>  

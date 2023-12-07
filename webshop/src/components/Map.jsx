@@ -14,6 +14,8 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 function Map(props) { 
 
+  // VÕTTA ANDMEBAASIST KÕIK POED
+
   return (
   <div>
 

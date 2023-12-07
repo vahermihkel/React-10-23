@@ -1,20 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import productsFromFile from "../../data/products.json"
+// import productsFromFile from "../../data/products.json"
 import { ToastContainer, toast } from 'react-toastify';
 
-// 1. Suunasime MaintainProducts lehelt EditProduct URL-le, saates kaasa ID
-// 2. App.js sees võimaldasime panna ID URLi sisse
-// 3. EditProductis võtsime selle saadetud ID
-// 4a. Importisime kõik tooted
-// 4. Otsisime selle ID alusel toote üles
-// 5. Muutsime selle saadud ID numbriks, sest URLst tulevad ainult sõnad
-// 6. Kui ei leitud, siis tegime varajase returni
-// 7. Kuvasime välja HTMLs selle leitud toote (kui leiti ehk läks varajasest returnist üle)
-
 function EditProduct() {                        // 27333323 === URL-s "27333323"
+  const [dbProducts, setDbProducts] = useState([]); // ALATI ORIGINAALSED TOOTED 481tk
   const { product_id } = useParams();           // 22676756 === URL-s "22676756"  
-  const found = productsFromFile.find(product => product.id === Number(product_id));
+  const found = dbProducts.find(product => product.id === Number(product_id));
   // const found2 = productsFromFile.filter(product => product.id === Number(product_id))[0];
   const idRef = useRef();
   const nameRef = useRef();
@@ -25,6 +17,16 @@ function EditProduct() {                        // 27333323 === URL-s "27333323"
   const activeRef = useRef();
   const navigate = useNavigate();
   const [idUnique, setIdUnique] = useState(true);
+  const url = "https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/products.json";
+
+  // uef + import
+  useEffect(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(json => {
+        setDbProducts(json);
+      })
+  }, []);
 
   const edit = () => {
 
@@ -59,8 +61,8 @@ function EditProduct() {                        // 27333323 === URL-s "27333323"
     }
 
     // index - järjekorranumber, mitmes ta on alates 0st
-    const index = productsFromFile.findIndex(product => product.id === Number(product_id));
-    productsFromFile[index] = {
+    const index = dbProducts.findIndex(product => product.id === Number(product_id));
+    dbProducts[index] = {
       "id": Number(idRef.current.value),
       "image": imageRef.current.value,
       "name": nameRef.current.value,
@@ -69,13 +71,13 @@ function EditProduct() {                        // 27333323 === URL-s "27333323"
       "category": categoryRef.current.value,
       "active": activeRef.current.checked
     }
-    // läheb oluliseks andmebaaside puhul
-    navigate("/admin/products");
+    fetch(url, {"method": "PUT", "body": JSON.stringify(dbProducts)})
+      .then(() => navigate("/admin/products"));
   }
 
   const checkIdUniqueness = () => {
     // SIIN SEES KONTROLLIME, kas kellelgi on selline ID olemas nagu idRef.current.value sees
-    const result = productsFromFile.find(product => product.id === Number(idRef.current.value));
+    const result = dbProducts.find(product => product.id === Number(idRef.current.value));
     if (result === undefined) {
       setIdUnique(true);
     } else {
