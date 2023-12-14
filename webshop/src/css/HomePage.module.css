@@ -4,22 +4,22 @@
   margin: 0 3%;
 }
 
-.home-product {
+.product {
   border: 1px solid lightgray;
   padding: 10px;
 }
 
-.home-image {
+.image {
   width: 150px;
   height: 150px;
   transition: 0.5s;
 }
 
-.home-name {
+.name {
   height: 50px;
 }
 
-.home-product:hover .home-image {
+.product:hover .image {
   transform: scale(1.05);
   transition: 0.5s;
 }

@@ -7,13 +7,16 @@ import './index.css'; // <--- siin kirjutasin üle
 import './i18n';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { CartSumProvider } from './store/CartSumContext';
 // import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <CartSumProvider>
+        <App />
+      </CartSumProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

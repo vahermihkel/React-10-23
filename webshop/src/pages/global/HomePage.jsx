@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
-import "../../css/HomePage.css"
+import styles from "../../css/HomePage.module.css"
 import { Spinner } from 'react-bootstrap';
+import SortButtons from '../../components/home/SortButtons';
 
 // 27.11   13. E localStorage-sse massiiv (array)  --->   KOJU suur hunnik kodutöid
 //          MUI kujundust
@@ -10,7 +11,7 @@ import { Spinner } from 'react-bootstrap';
 //        K kujundus ostukorvis ---> KOJU ei saada
 // 02.12   15. L API päringud -> pakiautomaatide võtmine ---> KOJU saadan mõne faili
 // 06.12   16. K andmebaasi kõik meie kategooriad, tooted, poed jne.... ---> saadan proovitöö Nortali osas
-// 17.12 13.00-16.15   17.  Alamkomponendid, CSS moodulid, Context, vaatame proovitöö üle ---> saadan veel mõned proovitööd 2-3tk
+// 14.12 18.00-21.15   17.  Alamkomponendid, CSS moodulid, Context, vaatame proovitöö üle ---> saadan veel mõned proovitööd 2-3tk
 // 30.12 14.00-15.30   18. Lõpuprojekti esitlemine    1.5h
 
 // Rahel:
@@ -74,25 +75,7 @@ function HomePage() {
     // 5. panna localStorage-sse tagasi:   localStorage.setItem(VÕTI, UUS_VÄÄRTUS)
   }
  
-  const sortAZ = () => {
-    products.sort((a,b) => a.name.localeCompare(b.name));
-    setProducts(products.slice());
-  }
- 
-  const sortZA = () => {
-    products.sort((a,b) => b.name.localeCompare(a.name));
-    setProducts(products.slice());
-  }
- 
-  const sortPricesAsc = () => {
-    products.sort((a,b) => a.price - b.price);
-    setProducts(products.slice());
-  }
- 
-  const sortPricesDesc = () => {
-    products.sort((a,b) => b.price - a.price);
-    setProducts(products.slice());
-  }
+  
  
   // const filterByFigure = () => {
   //   const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "figure");
@@ -126,20 +109,20 @@ function HomePage() {
   return (
     <div>
         <div>Total {products.length} product(s) </div> 
-        <button onClick={sortAZ} >SortA-Z</button>
-        <button onClick={sortZA} >SortZ-A</button>
-        <button onClick={sortPricesAsc} >Sort price Asc</button>
-        <button onClick={sortPricesDesc} >Sort price Desc</button>
+        <SortButtons
+          products={products}
+          setProducts={setProducts}
+        />
         {/* <button onClick={filterByLego} >Lego</button>
         <button onClick={filterByStarWars} >Starwars</button>
         <button onClick={filterByFigure} >Figure</button>  */}
         { categories.map( category =>  <button onClick={() => filterByCategory(category.name)}>{category.name}</button>) }
  
-        <div className="products">
+        <div className={styles.products}>
           {products.map((product, index) =>  
-            <div key={index} className="home-product"> 
-              <img className="home-image" src={product.image} alt="" />
-              <div className="home-name"> {product.name} </div>
+            <div key={index} className={styles.product}> 
+              <img className={styles.image} src={product.image} alt="" />
+              <div className={styles.name}> {product.name} </div>
               <div> {product.price} </div>
               <Button variant="contained" onClick={() => addToCart (product)  }>Add to Cart</Button>
               <Link to={"/product/" + product.id} >
