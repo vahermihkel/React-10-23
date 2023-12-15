@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import styles from "../../css/Cart.module.css";
 import ParcelMachines from '../../components/cart/ParcelMachines';
 import Payment from '../../components/cart/Payment';
+import { useCartSum } from '../../store/CartSumContext';
  
 function Cart() {
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || [] );
+  const { setCartSum } = useCartSum();
 
   const calculateCartSum = () => {
     let amount = 0;
@@ -16,6 +18,7 @@ function Cart() {
     cart.splice(0);
     setCart(cart.slice());
     localStorage.setItem("cart", JSON.stringify(cart));
+    setCartSum(0);
   }
 
   const decreaseQuantity = (index) => {
@@ -25,18 +28,21 @@ function Cart() {
     }
     setCart(cart.slice());
     localStorage.setItem("cart", JSON.stringify(cart));
+    setCartSum(calculateCartSum());
   }
 
   const increaseQuantity = (index) => {
     cart[index].kogus = cart[index].kogus + 1;
     setCart(cart.slice());
     localStorage.setItem("cart", JSON.stringify(cart));
+    setCartSum(calculateCartSum());
   }
 
   const removeFromCart = (index) => {
     cart.splice(index, 1)
     setCart(cart.slice());
     localStorage.setItem("cart", JSON.stringify(cart));
+    setCartSum(calculateCartSum());
   }
  
   return (

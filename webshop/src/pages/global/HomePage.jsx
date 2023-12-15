@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import styles from "../../css/HomePage.module.css"
 import { Spinner } from 'react-bootstrap';
 import SortButtons from '../../components/home/SortButtons';
+import { useCartSum } from '../../store/CartSumContext';
 
 // 27.11   13. E localStorage-sse massiiv (array)  --->   KOJU suur hunnik kodutöid
 //          MUI kujundust
@@ -30,6 +31,7 @@ function HomePage() {
   const url = "https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/products.json";
   const categoryUrl = "https://mihkel-react-webshop-10-23-default-rtdb.europe-west1.firebasedatabase.app/categories.json";
   const [categories, setCategories] = useState([]);
+  const { setCartSum } = useCartSum();
 
   // uef + import
   useEffect(() => {
@@ -48,54 +50,20 @@ function HomePage() {
   }, []);
  
   const addToCart = (product) => {
-    // localStorage.setItem("teema", "tume") <--- võti oli sama, väärtus erinev
-    // localStorage.setItem("teema", "hele")    .getItem("teema")   et kätte saada 
-
-    // localStorage.setItem("keel", "est") <---
-    // localStorage.setItem("keel", "eng") 
-    // localStorage.setItem("keel", "rus")     .getItem("keel")   et kätte saada 
-
-                                    // "[{},{},{}]"   --->  [{},{},{}]
     const cartFromLS = JSON.parse(localStorage.getItem("cart")) || [];
     const index = cartFromLS.findIndex(cartProduct => cartProduct.toode.id === product.id);
-    if (index !== -1) { // kui ei leita, siis järjekorranumber on -1
-    // if (index >= 0) { kui leitakse, on järjekorranumber suurem või võrdne 0ga
+    if (index !== -1) { 
       cartFromLS[index].kogus = cartFromLS[index].kogus + 1;
     } else {
       cartFromLS.push({"kogus": 1, "toode": product});
     }
     localStorage.setItem("cart", JSON.stringify(cartFromLS));
-    // setProducts(products.slice());
-
-    // localStorage-sse pannes:
-    // 1. võtta localStorage-st:   localStorage.getItem(VÕTI) || []
-    // 2. võtta jutumärgid maha:   JSON.parse()
-    // 3. lisada localStorage-st võetule üks juurde:    .push(UUS_ASI)
-    // 4. panna jutumärgid tagasi: JSON.stringify()
-    // 5. panna localStorage-sse tagasi:   localStorage.setItem(VÕTI, UUS_VÄÄRTUS)
+    
+    let amount = 0;
+    cartFromLS.forEach(product => amount = amount + product.toode.price * product.kogus)
+    setCartSum(amount.toFixed(2));
   }
- 
-  
- 
-  // const filterByFigure = () => {
-  //   const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "figure");
-  //   setProducts(filteredProducts);
-  // }
- 
-  // const filterByLego = () => {
-  //   const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "lego");
-  //   setProducts(filteredProducts);
-  // }
 
-  // // const filterByAllegor = () => {
-  // //   const filteredProducts = productsFromFile.filter (product => product.name.toLowerCase().includes("allegor"));
-  // //   setProducts(filteredProducts.slice());
-  // // }
- 
-  // const filterByStarWars = () => {
-  //   const filteredProducts = dbProducts.filter(product => product.category.toLowerCase() === "star wars");
-  //   setProducts(filteredProducts);
-  // }
 
   const filterByCategory = (categoryClicked) => {
     const filteredProducts = dbProducts.filter(product => product.category === categoryClicked);
